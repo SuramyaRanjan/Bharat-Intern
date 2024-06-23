@@ -60,7 +60,8 @@ app.get("/", (req, res) => {
     });
     return res.redirect('index.html');
 });
+const port = process.env.PORT || 6300;
 
-app.listen(6300, () => {
-    console.log("Listening on Port 6300");
+app.listen(port, () => {
+    console.log(`Listening on Port ${port}`);
 });
