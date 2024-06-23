@@ -9,20 +9,17 @@ const addButton = document.getElementById('add_btn');
 const expenseTableBody = document.getElementById('expense-table-body');
 const totalAmountDisplay = document.getElementById('total-amount');
 
-// Fetch data on page load
 document.addEventListener('DOMContentLoaded', function() {
     loadExpenses();
 });
 
 function loadExpenses() {
-    // Load data from local storage
     const storedExpenses = localStorage.getItem('expenses');
     if (storedExpenses) {
         expenses = JSON.parse(storedExpenses);
         expenses.forEach(expense => addExpenseToTable(expense));
         updateTotalAmount();
     } else {
-        // If no data in local storage, fetch from server
         fetch('/expenses')
             .then(response => {
                 if (!response.ok) {
@@ -34,7 +31,6 @@ function loadExpenses() {
                 expenses = data;
                 expenses.forEach(expense => addExpenseToTable(expense));
                 updateTotalAmount();
-                // Save to local storage
                 localStorage.setItem('expenses', JSON.stringify(expenses));
             })
             .catch(error => console.error('Error fetching data:', error));
@@ -45,7 +41,7 @@ addButton.addEventListener('click', function(event) {
     event.preventDefault();
 
     const category = categorySelect.value;
-    const amount = parseFloat(amountInput.value); // Ensure amount is a number
+    const amount = parseFloat(amountInput.value); 
     const info = infoInput.value;
     const date = dateInput.value;
 
@@ -75,7 +71,6 @@ addButton.addEventListener('click', function(event) {
             addExpenseToTable(expense);
             updateTotalAmount();
             clearForm();
-            // Save to local storage
             saveData();
         } else {
             alert("Error adding record");
@@ -87,7 +82,6 @@ addButton.addEventListener('click', function(event) {
 });
 
 function addExpenseToTable(expense) {
-    // Ensure amount_input is a valid number
     if (typeof expense.amount_input !== 'number' || isNaN(expense.amount_input)) {
         console.error('Invalid amount_input:', expense.amount_input);
         return;
@@ -108,9 +102,7 @@ function addExpenseToTable(expense) {
         row.remove();
         expenses = expenses.filter(e => e !== expense);
         updateTotalAmount();
-        // Save to local storage
         saveData();
-        // Add code to delete from database here
     });
 
     expenseTableBody.appendChild(row);
@@ -118,13 +110,12 @@ function addExpenseToTable(expense) {
 
 function updateTotalAmount() {
     totalAmount = expenses.reduce((sum, expense) => {
-        // Ensure expense.amount_input is a valid number before adding to sum
         const amount = parseFloat(expense.amount_input);
         if (!isNaN(amount)) {
             return sum + (expense.category_select === 'Income' ? amount : -amount);
         } else {
             console.error('Invalid amount_input:', expense.amount_input);
-            return sum; // Ignore this expense in total calculation
+            return sum; 
         }
     }, 0);
     totalAmountDisplay.textContent = totalAmount.toFixed(2);

@@ -1,4 +1,3 @@
-/* General Styling */
 body {
     background-color: #f5f7fa;
     font-family: 'Roboto', sans-serif;
@@ -16,7 +15,6 @@ input, select, button {
     font-family: 'Roboto', sans-serif;
 }
 
-/* Input Section Styling */
 .input-section {
     display: flex;
     flex-direction: row;
@@ -57,7 +55,6 @@ input, select, button {
     transform: scale(1.05);
 }
 
-/* Table Styling */
 .expense-list {
     margin: 20px 0;
 }
@@ -106,7 +103,6 @@ tfoot td {
     background-color: #c82333;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .input-section {
         flex-direction: column;
